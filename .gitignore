@@ -26,6 +26,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+body_models/
+dataset/
+humanml_trans_enc_512/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

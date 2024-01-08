@@ -174,6 +174,8 @@ def commandline_input():
         if command == 'exit':
             print('Exiting!')
             raise SystemExit(0)
+        elif command == '':
+            print('Empty Command!')
         # elif command.startswith(":r"):
         #     splits = command.split(":")
         #     if len(splits) > 1:
@@ -184,14 +186,6 @@ def commandline_input():
         else:
             generate_text(command)
         
-            
-
-
-# def start_pose_estimate():
-#     loop = asyncio.new_event_loop()  # <-- create new loop in this thread here
-#     asyncio.set_event_loop(loop)
-#     loop.run_until_complete(main())
-
 
 def main(request):
     return {'name': 'Andrew'}
@@ -210,15 +204,14 @@ if __name__ == "__main__":
     
     frame = None
     superfast = True
-    # commandline_input()
     app = web.Application(client_max_size=1024**2)
     app.router.add_route('GET', '/ws', websocket_handler)
     app.router.add_route('GET', '/get_pose', pose_getter)
     app.add_routes([web.get('/', main)])
-    threading.Thread(target=commandline_input, daemon=True).start()
-    
     
     print("=================================================================")
     print("r: reset offset (use r:0.91), s: start recording, e: end recording, w: write video")
     print("=================================================================")
+    threading.Thread(target=commandline_input, daemon=True).start()
     web.run_app(app, port=8080)
+    

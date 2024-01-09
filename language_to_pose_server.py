@@ -119,9 +119,9 @@ async def pose_getter(request):
         reset_buffer = False
     
     if cycle_motion:
-        if ticker > len(mdm_motions) - 1 :
+        if ticker > len(mdm_motions) - 1:
             ticker = 0
-            mdm_motions[..., [0, 2]] -= mdm_motions[:1, :1, [0, 2]] -  mdm_motions[-1:, -1:, [0, 2]]
+            mdm_motions[..., [0, 2]] = mdm_motions[..., [0, 2]] - (mdm_motions[:1, :1, [0, 2]] -  mdm_motions[-1:, :1, [0, 2]])
             
             
         j3d_curr = mdm_motions[ticker]
@@ -176,19 +176,13 @@ def commandline_input():
             raise SystemExit(0)
         elif command == '':
             print('Empty Command!')
-        # elif command.startswith(":r"):
-        #     splits = command.split(":")
-        #     if len(splits) > 1:
-        #         offset_height = float(splits[-1])
-        #     reset_offset = True
-        # elif command.startswith("fps"):
-        #     print(fps)
         else:
             generate_text(command)
         
 
 def main(request):
     return {'name': 'Andrew'}
+
 
 if __name__ == "__main__":
     print("Running PHC Demo")
